@@ -1,0 +1,23 @@
+#   This Algo is used to find out how can we maxmize the value of some items. Lets say there are few weights of some values and you want to choose items out of it such that the calue is maximised. So we use this.
+
+    #  Imagine the weights are 1,2,3  and the values are 2,4,1. How can we choose two items such that total value is maximum
+    #  We will make an arraylist of weights vs number of different weights. Here we will make
+    # and then we can see that holding weight 2 and 3 will be a wise option.
+# In this one can't take a partial item, either he pick the item or he doesn't pick the item.
+
+# If he has the option to split the item then we can take the value/weight ratio and take the items accordingly
+
+def knapSack(weightArr, valuesArr, totalWeight):
+    rows, cols = (len(weightArr), totalWeight)
+    res = [[0 for i in range(cols+1)] for j in range(rows+1)]
+    for i in range(rows+1):
+        for j in range(cols + 1):
+            if i == 0 or j ==0:
+                res[i][j] = 0
+            elif weightArr[i-1] <= j:
+                res[i][j] = max(valuesArr[i-1]+res[i-1][totalWeight - weightArr[i-1]], res[i-1][j])
+            else:
+                res[i][j] = res[i-1][j];
+    return res[rows][cols]
+
+print(knapSack([2,3,5,4], [4,2,6,2], 7))
